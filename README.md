@@ -1,15 +1,15 @@
 아래는 config.yaml 예시입니다:
 
 yaml
-복사
-편집
-url: "http://localhost:8080/test"
-interval_sec: 5
-data_format:
-  temperature: "float"
-  humidity: "int"
-  status: "string"
-  alert: "bool"
+
+- url: "http://localhost:8080/test"
+- interval_sec: 5
+- data_format:
+-   temperature: "float"
+-   humidity: "int"
+-   status: "string"
+-   alert: "bool"
+
 실행 방법:
 위 config.yaml 파일을 저장합니다.
 
