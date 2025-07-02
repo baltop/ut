@@ -1,0 +1,8 @@
+url: "http://localhost:8080/hands/left"
+interval_sec: 5
+data_format:
+  temperature: "float"
+  humidity: "int"
+  status: "string"
+  alert: "bool"
+  left-hands: "int"
