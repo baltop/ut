@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
+
 	"log"
 	"math/rand"
 	"net/http"
@@ -21,7 +22,7 @@ type Config struct {
 }
 
 func loadConfig(path string) (*Config, error) {
-	content, err := ioutil.ReadFile(path)
+	content, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
@@ -65,7 +66,7 @@ func sendJSON(url string, jsonData map[string]interface{}) error {
 	defer resp.Body.Close()
 
 	if resp.StatusCode >= 300 {
-		respBody, _ := ioutil.ReadAll(resp.Body)
+		respBody, _ := io.ReadAll(resp.Body)
 		return fmt.Errorf("HTTP error %d: %s", resp.StatusCode, string(respBody))
 	}
 
@@ -73,10 +74,10 @@ func sendJSON(url string, jsonData map[string]interface{}) error {
 }
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
+	// rand.Seed(time.Now().UnixNano())
 
 	if len(os.Args) < 2 {
-		log.Fatal("Usage: ./client config.yaml")
+		log.Fatal("Usage: ./ut config.yaml")
 	}
 
 	configPath := os.Args[1]
@@ -89,16 +90,13 @@ func main() {
 	defer ticker.Stop()
 
 	log.Println("Starting REST client...")
-	for {
-		select {
-		case <-ticker.C:
-			data := generateRandomData(config.DataFormat)
-			err := sendJSON(config.URL, data)
-			if err != nil {
-				log.Printf("Failed to send data: %v", err)
-			} else {
-				log.Printf("Sent data: %+v", data)
-			}
+	for range ticker.C {
+		data := generateRandomData(config.DataFormat)
+		err := sendJSON(config.URL, data)
+		if err != nil {
+			log.Printf("Failed to send data: %v", err)
+		} else {
+			log.Printf("Sent data: %+v", data)
 		}
 	}
 }

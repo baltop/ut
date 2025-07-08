@@ -1,4 +1,4 @@
-url: "http://localhost:8080/hands/left"
+url: "http://localhost:8090/hands/left"
 interval_sec: 5
 data_format:
   temperature: "float"
