@@ -1,4 +1,4 @@
-url: "http://localhost:8090/api/products/{id}"
+url: "http://localhost:8090/api/products/red"
 interval_sec: 5
 data_format:
   gate: "float"
